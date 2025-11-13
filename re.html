@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluetooth Controller</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; }
+        button { font-size: 1.5rem; padding: 20px; margin: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <button id="sendBee">bee</button>
+
+    <script>
+        function sendCommand(cmd, data = null) {
+            const commandPayload = {
+                cmd: cmd,
+                data: data,
+                timestamp: new Date().getTime() 
+            };
+            
+            localStorage.setItem('ble_command', JSON.stringify(commandPayload));
+            
+            console.log('已傳送指令:', commandPayload);
+            alert('指令已送出: ' + cmd);
+        }
+
+        document.getElementById('sendBee').onclick = () => {
+            // 'bee' 對應到 playSystem 網頁中的 'case bee'
+            sendCommand('bee'); 
+        };
+    </script>
+</body>
+</html>
