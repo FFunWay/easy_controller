@@ -14,7 +14,6 @@
     <button id="sendBee">bee</button>
 
     <script>
-        // 這是您原本的函式，用來寫入 localStorage
         function sendCommand(cmd, data = null) {
             const commandPayload = {
                 cmd: cmd,
@@ -24,30 +23,17 @@
             
             localStorage.setItem('ble_command', JSON.stringify(commandPayload));
             
-            console.log('easy_controller (Iframe) 已收到指令並寫入 localStorage:', commandPayload);
+            console.log('已傳送指令:', commandPayload);
+            alert('指令已送出: ' + cmd);
         }
 
-        // ▼▼▼▼▼ 這是您缺少的「監聽器」程式碼 ▼▼▼▼▼
-        // 監聽來自 "父網頁" (test.html) 的 'message' 事件
-        window.addEventListener('message', (event) => {
-            
-            // 為了測試，我們先允許所有來源
-            // if (event.origin !== 'null' && event.origin !== 'file://') {
-            //     return;
-            // }
-
-            // 檢查資料格式是否正確
-            if (event.data && event.data.cmd) {
-                console.log('easy_controller (Iframe) 透過 postMessage 收到指令:', event.data);
-                
-                // 呼叫您原本的函式，將指令寫入 localStorage
-                sendCommand(event.data.cmd, event.data.data || null);
-            } else {
-                console.log('easy_controller (Iframe) 收到無法辨識的 postMessage:', event.data);
-            }
-        });
+        document.getElementById('sendBee').onclick = () => {
+            // 'bee' 對應到 playSystem 網頁中的 'case bee'
+            sendCommand('bee'); 
+        };
     </script>
 </body>
 </html>
+
 
 
